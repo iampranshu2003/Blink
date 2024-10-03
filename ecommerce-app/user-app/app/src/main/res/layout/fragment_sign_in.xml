@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".auth.SignInFragment">
+
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         >
+
+         <ImageView
+             android:id="@+id/imageView"
+             android:layout_width="match_parent"
+             android:scaleType="centerCrop"
+             android:layout_height="370dp"
+             tools:src="@drawable/login_image" />
+
+         <ImageView
+             android:id="@+id/imageView2"
+             android:layout_width="wrap_content"
+             android:layout_height="102dp"
+             android:layout_gravity="center"
+             tools:src="@drawable/icon" />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="India's last minuit app"
+             android:textSize="20dp"
+             android:textColor="@color/black"
+             android:textStyle="bold"
+
+             android:gravity="center"/>
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+
+             android:gravity="center"
+             android:text="Login or Signup"
+             android:textColor="@color/grey"
+             android:textStyle="bold"
+             android:textSize="14dp"/>
+         <com.google.android.material.textfield.TextInputEditText
+             android:layout_width="350dp"
+             android:id="@+id/etPhoneNumber"
+             android:layout_marginTop="20dp"
+             android:textSize="25sp"
+             android:padding="3dp"
+             android:hint="   Enter mobile number"
+             android:drawableStart="@drawable/baseline_add_call_24"
+             android:layout_height="55dp"
+             android:inputType="number"
+             android:layout_gravity="center"/>
+
+         <com.google.android.material.button.MaterialButton
+             android:layout_width="match_parent"
+             android:id="@+id/btnContinue"
+             android:layout_height="55dp"
+             android:layout_marginHorizontal="@dimen/_25sdp"
+             android:layout_marginTop="15dp"
+             android:text="Continue"
+             android:textSize="20sp"
+             android:textColor="@color/black"
+             app:backgroundTint="@color/grey"
+             app:cornerRadius="8dp" />
+     </LinearLayout>
+ </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvProduct"
+        android:layout_width="match_parent"
+        android:layout_height="286.00dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="20dp"
+        android:elevation="10dp"
+        android:layout_margin="@dimen/_5sdp"
+        app:cardPreventCornerOverlap="false"
+        android:background="@drawable/bg_stroke"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="13dp"
+            android:orientation="vertical">
+           <com.denzcoskun.imageslider.ImageSlider
+               android:id="@+id/ivImageSlider"
+               android:layout_width="wrap_content"
+               android:layout_height="156dp"
+               app:iss_auto_cycle="false"
+               app:iss_text_align = "center"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               />
+            <TextView
+                android:id="@+id/tvProductTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Amul toned milk"
+                android:textColor="@color/black"
+                android:textSize="15.60sp"/>
+            <TextView
+                android:id="@+id/tvProductQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500ml"
+                android:textColor="@color/grey"
+                android:textSize="15.60sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/tvProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 50"
+                        android:textColor="@color/black"
+                        android:textSize="15.60sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="78dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvAdd"
+                        android:text="Add"
+                        android:textColor="@color/green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:padding="5.20dp"
+                        android:textSize="14.30sp"
+                        android:background="@drawable/bg_add_button"/>
+                    <LinearLayout
+                        android:id="@+id/productCount"
+                        android:layout_width="78dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_weight="3"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:background="@drawable/bg_product_count"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/tvDecrement"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:gravity="center"
+                            android:textSize="19.50dp"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/tvCount"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center"
+                            android:textSize="19.50dp"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/tvIncrement"
+                            android:layout_height="wrap_content"
+                            android:text="+"
+                            android:gravity="center"
+                            android:textSize="19.50dp"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+
+                            />
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

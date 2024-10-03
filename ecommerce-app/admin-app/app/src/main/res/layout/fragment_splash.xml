@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:backgroundTint="@color/yellow"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    tools:context=".auth.SplashFragment">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blink"
+                android:textColor="@color/black"
+                android:textSize="90dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="it"
+                android:textColor="@color/green"
+                android:textSize="90dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="India's last minuit app"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+
+            android:gravity="center"/>
+        <View
+            android:layout_width="236dp"
+            android:layout_height="2.60dp"
+            android:background="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="A Zomato company"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

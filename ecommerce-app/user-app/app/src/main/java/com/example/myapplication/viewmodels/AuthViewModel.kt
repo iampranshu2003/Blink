@@ -1,0 +1,91 @@
+package com.example.myapplication.viewmodels
+
+import android.app.Activity
+import android.content.ContentValues.TAG
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import com.example.myapplication.Utils
+import com.example.myapplication.models.Users
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.flow.MutableStateFlow
+import java.util.concurrent.TimeUnit
+
+class AuthViewModel: ViewModel() {
+
+    private val _verificationId = MutableStateFlow<String?>(null)
+    private val _signInSuccess = MutableStateFlow(false)
+    val signInSuccess = _signInSuccess
+    private val _isACurrentUser = MutableStateFlow(false)
+    val isACurrentUser = _isACurrentUser
+    private val _otpSent = MutableStateFlow(false)
+    val otpSent = _otpSent
+
+    init {
+        Utils.getAuthInstance().currentUser?.let {
+            _isACurrentUser.value = true
+        }
+    }
+    fun sendOTP(userNumber: String, activity: Activity){
+        val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks()
+        {
+
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+
+            }
+
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken,
+            ) {
+                _verificationId.value = verificationId
+                _otpSent.value = true
+
+            }
+
+
+        }
+        val options = PhoneAuthOptions.newBuilder(Utils.getAuthInstance())
+            .setPhoneNumber("+91$userNumber") // Phone number to verify
+            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+            .setActivity(activity) // Activity (for callback binding)
+            .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+
+
+
+    }
+    fun signInWithPhoneAuthCredential(otp: String, userNumber: String, user: Users) {
+        val credential = PhoneAuthProvider.getCredential(_verificationId.value.toString(), otp)
+        Utils.getAuthInstance().signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    FirebaseDatabase.getInstance().getReference("AllUsers").child(Utils.getCurrentUserId()).setValue(user)
+                    _signInSuccess.value = true
+
+                    val user = task.result?.user
+                } else {
+                    // Sign in failed, display a message and update the UI
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        // The verification code entered was invalid
+                    }
+                    // Update UI
+                }
+            }
+    }
+
+
+}
