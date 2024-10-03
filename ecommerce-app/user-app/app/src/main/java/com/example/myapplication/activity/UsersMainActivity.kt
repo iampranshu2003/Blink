@@ -39,7 +39,7 @@ class UsersMainActivity : AppCompatActivity(), Cartlistener {
 
     private fun onNextButtonClicked() {
         binding.btnNext.setOnClickListener {
-            startActivity(Intent((this, OrderPlaceActivity::class.java)))
+            startActivity(Intent(this, OrderPlaceActivity::class.java))
         }
     }
 
