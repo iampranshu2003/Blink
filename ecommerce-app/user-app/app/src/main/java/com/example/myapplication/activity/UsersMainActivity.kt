@@ -61,7 +61,9 @@ class UsersMainActivity : AppCompatActivity(), Cartlistener {
             bs.setContentView(bsCartProductsBinding.root)
 
             bsCartProductsBinding.tvProductCount.text = binding.tvProductCount.text
-
+            bsCartProductsBinding.btnNext.setOnClickListener {
+                startActivity(Intent(this, OrderPlaceActivity::class.java))
+            }
             adapterCartProducts = AdapterCartProducts()
             bsCartProductsBinding.rvProductsItems.adapter = adapterCartProducts
             adapterCartProducts.differ.submitList(cartProductList)
