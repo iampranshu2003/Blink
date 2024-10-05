@@ -2,6 +2,9 @@ package com.example.myapplication
 
 object Constants {
 
+
+    val MERCHANTID = "PGTESTPAYUAT"
+    val SALT_KEY = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399\n"
     val allProductCategory = arrayOf(
         "Vegetables & Fruits",
         "Dairy & Breakfast",

@@ -110,4 +110,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
 
+    //phone pay
+    implementation("phonepe.intentsdk.android.release:IntentSDK:2.4.3")
+
 }

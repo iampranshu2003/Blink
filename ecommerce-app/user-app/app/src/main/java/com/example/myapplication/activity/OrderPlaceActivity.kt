@@ -16,6 +16,8 @@ import com.example.myapplication.adapters.AdapterCartProducts
 import com.example.myapplication.databinding.ActivityOrderPlaceBinding
 import com.example.myapplication.databinding.AddressLayoutBinding
 import com.example.myapplication.viewmodels.UserViewModel
+import com.phonepe.intent.sdk.api.PhonePe
+import com.phonepe.intent.sdk.api.models.PhonePeEnvironment
 import kotlinx.coroutines.launch
 
 class OrderPlaceActivity : AppCompatActivity() {
@@ -29,9 +31,14 @@ class OrderPlaceActivity : AppCompatActivity() {
         setContentView(binding.root)
         setStatusBars()
         backToUserMainActivity()
-
+        intializePhonePay()
         getAllCartProducts()
         onPlacedOrderClicked()
+    }
+
+    private fun intializePhonePay() {
+        PhonePe.init(this,PhonePeEnvironment.SANDBOX, String merchantId, String appId)
+
     }
 
     private fun onPlacedOrderClicked() {
