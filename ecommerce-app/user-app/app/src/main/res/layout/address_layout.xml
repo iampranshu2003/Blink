@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_marginStart="6.50dp"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="13.00dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="13dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="6.50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please enter your address"
+                    android:textSize="19.50sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textColor="@color/yellow"
+                    android:layout_margin="13.00dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:weightSum="1"
+                    android:layout_marginHorizontal="13dp">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        app:boxCornerRadiusBottomEnd="16.90dp"
+                        app:boxCornerRadiusBottomStart="16.90dp"
+                        app:boxCornerRadiusTopEnd="16.90dp"
+                        app:boxCornerRadiusTopStart="16.90dp"
+                        app:cursorColor="@color/yellow"
+                        app:endIconMode="clear_text"
+                        android:layout_marginEnd="2.60dp"
+                        app:hintTextColor="@color/yellow">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_PinCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Pin Code"
+                            android:drawablePadding="9.10dp"
+                            android:inputType="number"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        app:boxCornerRadiusBottomEnd="16.90dp"
+                        app:boxCornerRadiusBottomStart="16.90dp"
+                        app:boxCornerRadiusTopEnd="16.90dp"
+                        app:boxCornerRadiusTopStart="16.90dp"
+                        app:cursorColor="@color/yellow"
+                        app:endIconMode="clear_text"
+                        android:layout_marginEnd="2.60dp"
+                        app:hintTextColor="@color/yellow">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_Phone_Number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Phone Number"
+                            android:drawablePadding="9.10dp"
+                            android:inputType="number"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:weightSum="1"
+                    android:layout_marginHorizontal="13dp">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        app:boxCornerRadiusBottomEnd="16.90dp"
+                        app:boxCornerRadiusBottomStart="16.90dp"
+                        app:boxCornerRadiusTopEnd="16.90dp"
+                        app:boxCornerRadiusTopStart="16.90dp"
+                        app:cursorColor="@color/yellow"
+                        app:endIconMode="clear_text"
+                        android:layout_marginEnd="2.60dp"
+                        app:hintTextColor="@color/yellow">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_State"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="State"
+                            android:drawablePadding="9.10dp"
+                            android:inputType="text"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        app:boxCornerRadiusBottomEnd="16.90dp"
+                        app:boxCornerRadiusBottomStart="16.90dp"
+                        app:boxCornerRadiusTopEnd="16.90dp"
+                        app:boxCornerRadiusTopStart="16.90dp"
+                        app:cursorColor="@color/yellow"
+                        app:endIconMode="clear_text"
+                        android:layout_marginEnd="2.60dp"
+                        app:hintTextColor="@color/yellow">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_District"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="District"
+                            android:drawablePadding="9.10dp"
+                            android:inputType="text"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:weightSum="1"
+                android:layout_marginHorizontal="13dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    app:boxCornerRadiusBottomEnd="16.90dp"
+                    app:boxCornerRadiusBottomStart="16.90dp"
+                    app:boxCornerRadiusTopEnd="16.90dp"
+                    app:boxCornerRadiusTopStart="16.90dp"
+                    app:cursorColor="@color/yellow"
+                    app:endIconMode="clear_text"
+                    android:layout_marginEnd="2.60dp"
+                    app:hintTextColor="@color/yellow">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_Discriptive_Address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter address(city,sector etc.)"
+                        android:drawablePadding="9.10dp"
+                        android:inputType="number"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="58.50dp"
+                    android:id="@+id/btnAdd"
+                    android:text="Add"
+                    android:textAllCaps="false"
+                    app:cornerRadius="10.40dp"
+                    android:backgroundTint="@color/yellow"
+                    android:layout_marginTop="13.00dp"
+                    android:layout_marginHorizontal="26.00dp"
+                    android:layout_gravity="center"
+                    />
+
+
+            </LinearLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

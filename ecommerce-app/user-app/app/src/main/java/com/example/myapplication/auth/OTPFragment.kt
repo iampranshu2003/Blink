@@ -59,7 +59,7 @@ class OTPFragment : Fragment() {
     }
 
     private fun verifyOTP(otp: String) {
-        val user = Users(uid = Utils.getCurrentUserId(), userPhoneNumber = userNumber, userAddress = null)
+        val user = Users(uid = Utils.getCurrentUserId(), userPhoneNumber = userNumber, userAddress = " ")
         viewModel.signInWithPhoneAuthCredential(otp, userNumber, user)
         lifecycleScope.launch {
             viewModel.signInSuccess.collect {

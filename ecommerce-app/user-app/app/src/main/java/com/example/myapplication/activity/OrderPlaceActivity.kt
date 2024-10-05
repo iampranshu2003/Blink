@@ -1,17 +1,22 @@
 package com.example.myapplication.activity
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
+import com.example.myapplication.Utils
 import com.example.myapplication.adapters.AdapterCartProducts
 import com.example.myapplication.databinding.ActivityOrderPlaceBinding
+import com.example.myapplication.databinding.AddressLayoutBinding
 import com.example.myapplication.viewmodels.UserViewModel
+import kotlinx.coroutines.launch
 
 class OrderPlaceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrderPlaceBinding
@@ -26,6 +31,53 @@ class OrderPlaceActivity : AppCompatActivity() {
         backToUserMainActivity()
 
         getAllCartProducts()
+        onPlacedOrderClicked()
+    }
+
+    private fun onPlacedOrderClicked() {
+        binding.btnNext.setOnClickListener{
+            viewModel.getAddressStatus().observe(this) { addressStatus ->
+                if (addressStatus) {
+
+                } else {
+                    val addressLayoutBinding = AddressLayoutBinding.inflate(LayoutInflater.from(this))
+
+                    val alertDialog = AlertDialog.Builder(this)
+                        .setView(addressLayoutBinding.root)
+                        .create()
+                    alertDialog.show()
+
+                    addressLayoutBinding.btnAdd.setOnClickListener {
+                        saveAddress(alertDialog, addressLayoutBinding)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun saveAddress(alertDialog: AlertDialog, addressLayoutBinding: AddressLayoutBinding) {
+        Utils.showDialog(this,"processing...")
+        val userPinCode = addressLayoutBinding.etPinCode.text.toString()
+        val userPhoneNumber = addressLayoutBinding.etPhoneNumber.text.toString()
+        val userState = addressLayoutBinding.etState.text.toString()
+        val userDistrict = addressLayoutBinding.etDistrict.text.toString()
+        val userAddress = addressLayoutBinding.etDiscriptiveAddress.text.toString()
+
+        val address = "$userPinCode, $userDistrict($userState), $userAddress, $userPhoneNumber"
+
+
+
+        lifecycleScope.launch {
+            viewModel.saveUserAddress(  address)
+            viewModel.saveAddressStatus()
+        }
+        alertDialog.dismiss()
+        Utils.hideDialog()
+
+        Utils.showToast(this, "Saved..")
+        alertDialog.dismiss()
+        Utils.hideDialog()
+
     }
 
     private fun backToUserMainActivity() {

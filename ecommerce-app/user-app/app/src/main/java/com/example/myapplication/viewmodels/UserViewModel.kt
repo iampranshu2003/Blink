@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.Utils
 import com.example.myapplication.models.Product
+import com.example.myapplication.models.Users
 import com.example.myapplication.roomdb.CartProductDao
 import com.example.myapplication.roomdb.CartProductTable
 import com.example.myapplication.roomdb.CartProductsDatabase
@@ -105,6 +107,11 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         FirebaseDatabase.getInstance().getReference("Admins").child("ProductCategory/${product.productCategory}/${product.productRandomID}").child("itemCount").setValue(itemCount)
         FirebaseDatabase.getInstance().getReference("Admins").child("ProductType/${product.productType}/${product.productRandomID}").child("itemCount").setValue(itemCount)
     }
+
+    fun saveUserAddress(address: String){
+        FirebaseDatabase.getInstance().getReference("AllUsers").child("Users").child(Utils.getCurrentUserId()).child("userAddress").setValue(address)
+
+    }
     //shared preferences
     fun savingCartItemCount(itemCount: Int){
         sharedPreferences.edit().putInt("itemCount", itemCount).apply()
@@ -113,5 +120,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         val totalItemCount = MutableLiveData<Int>()
         totalItemCount.value = sharedPreferences.getInt("itemCount", 0)
         return totalItemCount
+    }
+
+    fun saveAddressStatus(){
+        sharedPreferences.edit().putBoolean("addressStatus", true).apply()
+    }
+
+    fun getAddressStatus(): MutableLiveData<Boolean> {
+        val addressStatus = MutableLiveData<Boolean>()
+        addressStatus.value = sharedPreferences.getBoolean("addressStatus", false)
+        return addressStatus
+
     }
 }
