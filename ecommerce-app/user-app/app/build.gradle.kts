@@ -113,4 +113,8 @@ dependencies {
     //phone pay
     implementation("phonepe.intentsdk.android.release:IntentSDK:2.4.3")
 
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 }

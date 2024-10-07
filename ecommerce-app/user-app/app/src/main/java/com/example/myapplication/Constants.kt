@@ -5,6 +5,9 @@ object Constants {
 
     val MERCHANTID = "PGTESTPAYUAT"
     val SALT_KEY = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399\n"
+    var apiEndPoint = "/pg/v1/pay"
+    val merchantTransactionId = "txnId"
+
     val allProductCategory = arrayOf(
         "Vegetables & Fruits",
         "Dairy & Breakfast",
