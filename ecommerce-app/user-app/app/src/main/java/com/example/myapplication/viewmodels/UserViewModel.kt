@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.Constants
 import com.example.myapplication.Utils
+import com.example.myapplication.api.ApiUtilities
 import com.example.myapplication.models.Product
 import com.example.myapplication.models.Users
 import com.example.myapplication.roomdb.CartProductDao
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,6 +29,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     val sharedPreferences: SharedPreferences = application.getSharedPreferences("MyPref", MODE_PRIVATE)
     val cartProductDao: CartProductDao = CartProductsDatabase.getDatabaseInstance(application).cartProductsDao()
 
+    private val _paymentStatus = MutableStateFlow<Boolean>(false)
+    val paymentStatus = _paymentStatus
     //room database
     suspend fun insertCartProduct(products: CartProductTable) {
         cartProductDao.insertCartProduct(products)
@@ -131,5 +136,12 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         addressStatus.value = sharedPreferences.getBoolean("addressStatus", false)
         return addressStatus
 
+    }
+
+    // retrofit
+
+    suspend fun checkPayment(headers: Map<String, String>){
+        val res = ApiUtilities.statusAPI.checkStatus(headers, Constants.MERCHANTID, Constants.merchantTransactionId)
+        _paymentStatus.value = res.body() != null && res.body()!!.success
     }
 }

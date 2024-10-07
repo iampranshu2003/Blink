@@ -41,14 +41,14 @@ class OrderPlaceActivity : AppCompatActivity() {
         setContentView(binding.root)
         setStatusBars()
         backToUserMainActivity()
-        intializePhonePay()
         getAllCartProducts()
+        intializePhonePay()
         onPlacedOrderClicked()
     }
 
     private fun intializePhonePay() {
         val data = JSONObject()
-        PhonePe.init(this,PhonePeEnvironment.SANDBOX, Constants.MERCHANTID,"")
+        PhonePe.init(this, PhonePeEnvironment.SANDBOX, Constants.MERCHANTID," ")
 
         data.put("merchantId", Constants.MERCHANTID)
         data.put("merchantTransactionId", Constants.merchantTransactionId)
@@ -112,7 +112,7 @@ class OrderPlaceActivity : AppCompatActivity() {
     }
 
     val phonePayView = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == 1){
+        if (it.resultCode == RESULT_OK){
             checkStatus()
             Utils.showToast(this, "Payment Success")
         } else {
@@ -126,6 +126,23 @@ class OrderPlaceActivity : AppCompatActivity() {
             "X-VERIFY" to xVerify,
             "X-MERCHANT-ID" to Constants.MERCHANTID
         )
+        lifecycleScope.launch {
+            viewModel.checkPayment(headers)
+        viewModel.paymentStatus.collect{status->
+            if (status){
+                Utils.showToast(this@OrderPlaceActivity, "Payment Success")
+                startActivity(Intent(this@OrderPlaceActivity, UsersMainActivity::class.java))
+                finish()
+            }
+            else{
+                Utils.showToast(this@OrderPlaceActivity, "Payment Failed")
+            }
+
+
+        }
+
+        }
+
     }
     private fun getPaymentView() {
         try {
