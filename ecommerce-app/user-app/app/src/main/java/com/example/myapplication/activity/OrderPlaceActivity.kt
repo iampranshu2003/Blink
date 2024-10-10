@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -48,33 +49,42 @@ class OrderPlaceActivity : AppCompatActivity() {
 
     private fun intializePhonePay() {
         val data = JSONObject()
-        PhonePe.init(this, PhonePeEnvironment.SANDBOX, Constants.MERCHANTID," ")
+        PhonePe.init(this, PhonePeEnvironment.SANDBOX, Constants.MERCHANTID, "")
+
+        // Adding log messages
+        Log.d("OrderPlaceActivity", "Initializing PhonePe with merchant ID: ${Constants.MERCHANTID}")
 
         data.put("merchantId", Constants.MERCHANTID)
         data.put("merchantTransactionId", Constants.merchantTransactionId)
-        data.put("amount",200)
+        data.put("amount", 200)
         data.put("mobileNumber", "9999999999")
-        data.put("callbackUrl","https://webhook.site/callback-url")
+        data.put("callbackUrl", "https://webhook.site/callback-url")
+
+        Log.d("OrderPlaceActivity", "Payment data: $data")
 
         val paymentInstrument = JSONObject()
         paymentInstrument.put("type", "UPI_INTENT")
-        paymentInstrument.put("targetApp", "com.phonepe.app.simulator")
+        paymentInstrument.put("targetApp", "com.phonepe.simulator")
 
         data.put("paymentInstrument", paymentInstrument)
 
         val deviceContext = JSONObject()
         deviceContext.put("deviceOS", "ANDROID")
-        data.put("deviceContext",deviceContext)
+        data.put("deviceContext", deviceContext)
 
+        // Log data before encoding
+        Log.d("OrderPlaceActivity", "Complete data before encoding: $data")
 
         val payloadBase64 = Base64.encodeToString(
             data.toString().toByteArray(Charset.defaultCharset()),
             Base64.NO_WRAP
         )
 
+        Log.d("OrderPlaceActivity", "Base64 Encoded Payload: $payloadBase64")
 
-
+        // Generating checksum and adding logs to validate it
         val checksum = sha256(payloadBase64 + Constants.apiEndPoint + Constants.SALT_KEY) + "###1"
+        Log.d("OrderPlaceActivity", "Generated Checksum: $checksum")
 
         b2BPGRequest = B2BPGRequestBuilder()
             .setData(payloadBase64)
@@ -82,6 +92,7 @@ class OrderPlaceActivity : AppCompatActivity() {
             .setUrl(Constants.apiEndPoint)
             .build()
     }
+
     private fun sha256(input: String): String {
         val bytes = input.toByteArray(Charsets.UTF_8)
         val md = MessageDigest.getInstance("SHA-256")
@@ -91,11 +102,16 @@ class OrderPlaceActivity : AppCompatActivity() {
     }
 
     private fun onPlacedOrderClicked() {
-        binding.btnNext.setOnClickListener{
+        binding.btnNext.setOnClickListener {
+            Log.d("OrderPlaceActivity", "Place Order button clicked")
+
             viewModel.getAddressStatus().observe(this) { addressStatus ->
+                Log.d("OrderPlaceActivity", "Address status: $addressStatus")
+
                 if (addressStatus) {
                     getPaymentView()
                 } else {
+                    Log.d("OrderPlaceActivity", "Address not found, showing address dialog")
                     val addressLayoutBinding = AddressLayoutBinding.inflate(LayoutInflater.from(this))
 
                     val alertDialog = AlertDialog.Builder(this)
@@ -111,51 +127,60 @@ class OrderPlaceActivity : AppCompatActivity() {
         }
     }
 
-    val phonePayView = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == RESULT_OK){
+
+    val phonePayView = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        Log.d("OrderPlaceActivity", "PhonePe activity result received, result code: ${it.resultCode}")
+
+        if (it.resultCode == RESULT_OK) {
+            Log.d("OrderPlaceActivity", "Payment success, checking status")
             checkStatus()
             Utils.showToast(this, "Payment Success")
         } else {
+            Log.e("OrderPlaceActivity", "Payment failed")
             Utils.showToast(this, "Payment Failed")
         }
     }
+
     private fun checkStatus() {
         val xVerify = sha256("/pg/v1/status/${Constants.MERCHANTID}/${Constants.merchantTransactionId}" + Constants.SALT_KEY) + "###1"
+
+        Log.d("OrderPlaceActivity", "Checking payment status with X-Verify: $xVerify")
+
         val headers = mapOf(
             "Content-Type" to "application/json",
             "X-VERIFY" to xVerify,
             "X-MERCHANT-ID" to Constants.MERCHANTID
         )
+
+        Log.d("OrderPlaceActivity", "Headers: $headers")
+
         lifecycleScope.launch {
             viewModel.checkPayment(headers)
-        viewModel.paymentStatus.collect{status->
-            if (status){
-                Utils.showToast(this@OrderPlaceActivity, "Payment Success")
-                startActivity(Intent(this@OrderPlaceActivity, UsersMainActivity::class.java))
-                finish()
+            viewModel.paymentStatus.collect { status ->
+                Log.d("OrderPlaceActivity", "Payment status received: $status")
+                if (status) {
+                    Utils.showToast(this@OrderPlaceActivity, "Payment Success")
+                    startActivity(Intent(this@OrderPlaceActivity, UsersMainActivity::class.java))
+                    finish()
+                } else {
+                    Utils.showToast(this@OrderPlaceActivity, "Payment Failed")
+                }
             }
-            else{
-                Utils.showToast(this@OrderPlaceActivity, "Payment Failed")
-            }
-
-
         }
-
-        }
-
     }
+
     private fun getPaymentView() {
         try {
-            PhonePe.getImplicitIntent(this, b2BPGRequest,"com.phonepe.app.simulator")
-                .let {
-                    phonePayView.launch(it)
-                }
-        }
-        catch (e: Exception){
+            Log.d("OrderPlaceActivity", "Launching PhonePe payment view")
+            PhonePe.getImplicitIntent(this, b2BPGRequest, "com.phonepe.simulator").let {
+                phonePayView.launch(it)
+            }
+        } catch (e: Exception) {
+            Log.e("OrderPlaceActivity", "Error launching PhonePe payment: ${e.message}")
             Utils.showToast(this, e.message.toString())
         }
-
     }
+
 
     private fun saveAddress(alertDialog: AlertDialog, addressLayoutBinding: AddressLayoutBinding) {
         Utils.showDialog(this,"processing...")

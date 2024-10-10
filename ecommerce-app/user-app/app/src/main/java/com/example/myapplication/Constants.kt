@@ -3,7 +3,7 @@ package com.example.myapplication
 object Constants {
 
 
-    val MERCHANTID = "PGTESTPAYUAT"
+    val MERCHANTID = "MERCHANTUAT"
     val SALT_KEY = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399"
     var apiEndPoint = "/pg/v1/pay"
     val merchantTransactionId = "txnId"
